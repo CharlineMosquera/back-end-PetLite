@@ -19,6 +19,8 @@ public class Producto {
     private double precio;
     private boolean disponibilidad;
     private String descripcion;
+    // Atributo para edad de mascota
+    // babies, cachorro, adulto, senior, Todas las edades
 
     // relacion
     private Long categoria_id;
