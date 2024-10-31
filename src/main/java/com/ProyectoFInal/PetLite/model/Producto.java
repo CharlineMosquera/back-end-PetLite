@@ -1,9 +1,8 @@
 package com.ProyectoFInal.PetLite.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.ProyectoFInal.PetLite.model.enums.RangoEdad;
+import com.ProyectoFInal.PetLite.model.enums.Tamanio;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +18,14 @@ public class Producto {
     private double precio;
     private boolean disponibilidad;
     private String descripcion;
+
     // Atributo para edad de mascota
     // babies, cachorro, adulto, senior, Todas las edades
+
+    @Enumerated(EnumType.STRING)
+    private RangoEdad rangoEdad = RangoEdad.TODASLASEDADES;
+    @Enumerated(EnumType.STRING)
+    private Tamanio tamanio;
 
     // relacion
     private Long categoria_id;

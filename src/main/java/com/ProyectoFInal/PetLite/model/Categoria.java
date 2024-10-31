@@ -14,7 +14,6 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id_categoria;
-
     private String nombre_categoria;
 
     public Categoria() {
@@ -24,4 +23,5 @@ public class Categoria {
         this.id_categoria = id_categoria;
         this.nombre_categoria = nombre_categoria;
     }
+
 }
