@@ -1,6 +1,7 @@
 package com.ProyectoFInal.PetLite.service;
 
 import com.ProyectoFInal.PetLite.model.Categoria;
+import com.ProyectoFInal.PetLite.model.Producto;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,11 +10,13 @@ public interface ICategoriaService {
 
     void createCategoria(Categoria categoria);
 
-    Categoria getCategoria(Long id);
+    Categoria getCategoriaById(Long id);
 
     List<Categoria> getAllCategorias();
 
-    void editCategoria(Long id, String nombre_categoria);
+    List<Producto> getAllProductosByCategoriaId(Long id_categoria);
 
-    void deleteCategoria(Long id);
+    void editCategoria(Long id, String nombre_categoria, List<Producto> productos);
+
+    void deleteCategoriaById(Long id);
 }

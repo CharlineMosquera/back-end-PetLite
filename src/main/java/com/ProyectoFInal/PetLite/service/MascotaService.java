@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.model.Cliente;
 import com.ProyectoFInal.PetLite.model.Mascota;
 import com.ProyectoFInal.PetLite.repository.IMascotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class MascotaService implements IMascotaService{
     }
 
     @Override
-    public Mascota getMascota(Long id) {
+    public Mascota getMascotaById(Long id) {
         Mascota mascota = mascotaRepository.findById(id).orElse(null);
         return mascota;
     }
@@ -31,17 +32,17 @@ public class MascotaService implements IMascotaService{
     }
 
     @Override
-    public void editMascota(Long id, String nombre_mascota, String raza, Long id_cliente) {
-        Mascota mascota = this.getMascota(id);
+    public void editMascota(Long id, String nombre_mascota, String raza, Cliente cliente) {
+        Mascota mascota = this.getMascotaById(id);
         mascota.setNombre_mascota(nombre_mascota);
         mascota.setRaza(raza);
-        mascota.setId_cliente(id_cliente);
+        mascota.setDuenio(cliente);
         mascotaRepository.save(mascota);
     }
 
     @Override
-    public void deleteMascota(Long id) {
-        Mascota mascota = this.getMascota(id);
+    public void deleteMascotaById(Long id) {
+        Mascota mascota = this.getMascotaById(id);
         mascotaRepository.delete(mascota);
     }
 }

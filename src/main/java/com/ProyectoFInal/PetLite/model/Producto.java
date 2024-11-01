@@ -19,26 +19,20 @@ public class Producto {
     private boolean disponibilidad;
     private String descripcion;
 
-    // Atributo para edad de mascota
-    // babies, cachorro, adulto, senior, Todas las edades
-
     @Enumerated(EnumType.STRING)
-    private RangoEdad rangoEdad = RangoEdad.TODASLASEDADES;
+    private RangoEdad rangoEdad;
     @Enumerated(EnumType.STRING)
     private Tamanio tamanio;
 
-    // relacion
-    private Long categoria_id;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoriaProducto;
+
+    @ManyToOne
+    @JoinColumn(name = "id_orden")
+    private Orden orden;
 
     public Producto() {
     }
 
-    public Producto(Long id_producto, String nombre_producto, double precio, boolean disponibilidad, String descripcion, Long categoria_id) {
-        this.id_producto = id_producto;
-        this.nombre_producto = nombre_producto;
-        this.precio = precio;
-        this.disponibilidad = disponibilidad;
-        this.descripcion = descripcion;
-        this.categoria_id = categoria_id;
-    }
 }

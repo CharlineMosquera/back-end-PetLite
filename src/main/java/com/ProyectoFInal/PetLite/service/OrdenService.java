@@ -1,6 +1,8 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.model.Cliente;
 import com.ProyectoFInal.PetLite.model.Orden;
+import com.ProyectoFInal.PetLite.model.Producto;
 import com.ProyectoFInal.PetLite.repository.IOrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class OrdenService implements IOrdenService{
     }
 
     @Override
-    public Orden getOrden(Long id) {
+    public Orden getOrdenById(Long id) {
         Orden orden = ordenRepository.findById(id).orElse(null);
         return orden;
     }
@@ -32,17 +34,25 @@ public class OrdenService implements IOrdenService{
     }
 
     @Override
-    public void editOrden(Long id, Date fecha, double total, Long cliente_id) {
-        Orden orden = this.getOrden(id);
+    public List<Producto> getAllProductosByOrdenId(Long id_orden) {
+        Orden orden = this.getOrdenById(id_orden);
+        List<Producto> productosEnOrden = orden.getProductos();
+        return productosEnOrden;
+    }
+
+    @Override
+    public void editOrden(Long id, Date fecha, double total, Cliente cliente, List<Producto> productos) {
+        Orden orden = this.getOrdenById(id);
         orden.setFecha(fecha);
         orden.setTotal(total);
-        orden.setCliente_id(cliente_id);
+        orden.setCliente(cliente);
+        orden.setProductos(productos);
         ordenRepository.save(orden);
     }
 
     @Override
-    public void deleteOrden(Long id) {
-        Orden orden = this.getOrden(id);
+    public void deleteOrdenById(Long id) {
+        Orden orden = this.getOrdenById(id);
         ordenRepository.delete(orden);
     }
 }

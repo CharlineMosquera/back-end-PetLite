@@ -1,11 +1,10 @@
 package com.ProyectoFInal.PetLite.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter @Setter
 @Entity
@@ -20,16 +19,15 @@ public class Cliente {
     private String direccion;
     private String telefono;
     private String email;
+    private String contrasenia;
+
+    @OneToMany(mappedBy = "duenio")
+    private List<Mascota> mascotas;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Orden> ordenes;
 
     public Cliente() {
     }
 
-    public Cliente(Long id_cliente, String nombre_cliente, String apellido_cliente, String direccion, String telefono, String email) {
-        this.id_cliente = id_cliente;
-        this.nombre_cliente = nombre_cliente;
-        this.apellido_cliente = apellido_cliente;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-    }
 }

@@ -9,11 +9,11 @@ public interface IMascotaService {
 
     void createMascota(Mascota mascota);
 
-    Mascota getMascota(Long id);
+    Mascota getMascotaById(Long id);
 
     List<Mascota> getAllMascotas();
 
-    void editMascota(Long id, String nombre_mascota, String raza, Long id_cliente);
+    void editMascota(Long id, String nombre_mascota, String raza, Cliente cliente);
 
-    void deleteMascota(Long id);
+    void deleteMascotaById(Long id);
 }

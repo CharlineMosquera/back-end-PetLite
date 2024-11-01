@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.model.Categoria;
 import com.ProyectoFInal.PetLite.model.Producto;
 import com.ProyectoFInal.PetLite.model.enums.RangoEdad;
 import com.ProyectoFInal.PetLite.model.enums.Tamanio;
@@ -21,7 +22,7 @@ public class ProductoService implements IProductoService{
     }
 
     @Override
-    public Producto getProducto(Long id) {
+    public Producto getProductoById(Long id) {
         Producto producto = productoRepository.findById(id).orElse(null);
         return producto;
     }
@@ -35,21 +36,21 @@ public class ProductoService implements IProductoService{
     @Override
     public void editProducto(
             Long id, String nombre_producto, double precio, boolean disponibilidad,
-            String descripcion, RangoEdad rangoEdad, Tamanio tamanio, Long categoria_id) {
-        Producto producto = this.getProducto(id);
+            String descripcion, RangoEdad rangoEdad, Tamanio tamanio, Categoria categoria) {
+        Producto producto = this.getProductoById(id);
         producto.setNombre_producto(nombre_producto);
         producto.setPrecio(precio);
         producto.setDisponibilidad(disponibilidad);
         producto.setDescripcion(descripcion);
         producto.setRangoEdad(rangoEdad);
         producto.setTamanio(tamanio);
-        producto.setCategoria_id(categoria_id);
+        producto.setCategoriaProducto(categoria);
         productoRepository.save(producto);
     }
 
     @Override
-    public void deleteProducto(Long id) {
-        Producto producto = this.getProducto(id);
+    public void deleteProductoById(Long id) {
+        Producto producto = this.getProductoById(id);
         productoRepository.delete(producto);
     }
 }
