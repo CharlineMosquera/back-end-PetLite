@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.dto.MascotaDTO;
 import com.ProyectoFInal.PetLite.dto.ProductoDTO;
 import com.ProyectoFInal.PetLite.model.Producto;
 import com.ProyectoFInal.PetLite.repository.ProductoRepository;
@@ -116,5 +117,18 @@ public class ProductoService implements IProductoService {
             dto.setId_categoria(producto.getCategoriaProducto().getId_categoria());
         }
         return dto;
+    }
+
+    public List<Producto> obtenerProductosPorMascota(MascotaDTO mascotaDTO) {
+        // Obtener todos los productos
+        List<Producto> productos = productoRepository.findAll();
+
+        // Filtrar productos que coincidan con el tamaño y rango de edad
+        return productos.stream()
+                .filter(producto -> // Filtra por los que son iguales
+                        producto.getTamanio().equals(mascotaDTO.getTamanio()) &&
+                        producto.getRangoEdad().equals(mascotaDTO.getEdad()))
+                .limit(3) // Limitar a 3 productos
+                .collect(Collectors.toList()); // Coleccionar resultados en una lista
     }
 }

@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class Categoria {
     private Long id_categoria;
     private String nombre_categoria;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoriaProducto")
     private List<Producto> productos;
 
