@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.dto.RegistroDTO;
 import com.ProyectoFInal.PetLite.model.Cliente;
 import com.ProyectoFInal.PetLite.model.Mascota;
 import com.ProyectoFInal.PetLite.model.Orden;
@@ -11,14 +12,23 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ClienteService implements IClienteService{
+public class ClienteService implements IClienteService {
 
     @Autowired
     private IClienteRepository clienteRepository;
 
     @Override
-    public void createCliente(Cliente cliente) {
-        clienteRepository.save(cliente);
+    public void createCliente(RegistroDTO request) {
+        Cliente nuevoCliente = new Cliente();
+
+        nuevoCliente.setNombre_cliente(request.getNombre_cliente());
+        nuevoCliente.setApellido_cliente(request.getApellido_cliente());
+        nuevoCliente.setDireccion(request.getDireccion());
+        nuevoCliente.setEmail(request.getEmail());
+        nuevoCliente.setTelefono(request.getTelefono());
+        nuevoCliente.setContrasenia(request.getContrasenia());
+
+        clienteRepository.save(nuevoCliente);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.dto.RegistroDTO;
 import com.ProyectoFInal.PetLite.model.Cliente;
 import com.ProyectoFInal.PetLite.model.Mascota;
 import com.ProyectoFInal.PetLite.model.Orden;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface IClienteService {
 
-    void createCliente(Cliente cliente);
+    void createCliente(RegistroDTO cliente);
 
     Cliente getClienteById(Long id);
 
