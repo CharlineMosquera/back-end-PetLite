@@ -1,7 +1,9 @@
 package com.ProyectoFInal.PetLite.controller;
 
+import com.ProyectoFInal.PetLite.dto.LoginDTO;
 import com.ProyectoFInal.PetLite.model.Cliente;
 import com.ProyectoFInal.PetLite.service.IClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,8 @@ public class LoginController {
     @Autowired
     private IClienteService clienteService;
     @PostMapping("/iniciar-sesion")
-    public ResponseEntity<String> inicioSesion(@RequestBody Cliente cliente) {
-        Cliente clienteExiste = clienteService.findClienteByEmailAndContrasenia(cliente);
+    public ResponseEntity<String> inicioSesion(@Valid @RequestBody LoginDTO request) {
+        Cliente clienteExiste = clienteService.findClienteByEmailAndContrasenia(request);
 
         if (clienteExiste != null) {
             return ResponseEntity.ok("Usuario logueado con exito");

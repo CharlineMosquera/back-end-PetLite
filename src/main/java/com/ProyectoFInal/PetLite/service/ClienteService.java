@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.dto.LoginDTO;
 import com.ProyectoFInal.PetLite.dto.RegistroDTO;
 import com.ProyectoFInal.PetLite.model.Cliente;
 import com.ProyectoFInal.PetLite.model.Mascota;
@@ -78,7 +79,7 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
-    public Cliente findClienteByEmailAndContrasenia(Cliente cliente) {
+    public Cliente findClienteByEmailAndContrasenia(LoginDTO cliente) {
         String email = cliente.getEmail();
         String contrasenia = cliente.getContrasenia();
 

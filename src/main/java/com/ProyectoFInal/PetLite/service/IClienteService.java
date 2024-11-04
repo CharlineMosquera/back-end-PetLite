@@ -1,5 +1,6 @@
 package com.ProyectoFInal.PetLite.service;
 
+import com.ProyectoFInal.PetLite.dto.LoginDTO;
 import com.ProyectoFInal.PetLite.dto.RegistroDTO;
 import com.ProyectoFInal.PetLite.model.Cliente;
 import com.ProyectoFInal.PetLite.model.Mascota;
@@ -24,5 +25,5 @@ public interface IClienteService {
     void deleteClienteById(Long id);
 
     // Valida si un cliente existe por correo y password
-    Cliente findClienteByEmailAndContrasenia(Cliente cliente);
+    Cliente findClienteByEmailAndContrasenia(LoginDTO cliente);
 }
