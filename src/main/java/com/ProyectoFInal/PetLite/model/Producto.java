@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 public class Producto {
 
@@ -17,10 +18,14 @@ public class Producto {
     private String nombre_producto;
     private double precio;
     private boolean disponibilidad;
+    private String imagen;
+
+    @Column(length = 500)
     private String descripcion;
 
     @Enumerated(EnumType.STRING)
     private RangoEdad rangoEdad;
+
     @Enumerated(EnumType.STRING)
     private Tamanio tamanio;
 

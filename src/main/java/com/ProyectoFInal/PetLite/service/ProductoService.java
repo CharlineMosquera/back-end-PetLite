@@ -1,56 +1,120 @@
 package com.ProyectoFInal.PetLite.service;
 
-import com.ProyectoFInal.PetLite.model.Categoria;
+import com.ProyectoFInal.PetLite.dto.ProductoDTO;
 import com.ProyectoFInal.PetLite.model.Producto;
-import com.ProyectoFInal.PetLite.model.enums.RangoEdad;
-import com.ProyectoFInal.PetLite.model.enums.Tamanio;
-import com.ProyectoFInal.PetLite.repository.IProductoRepository;
+import com.ProyectoFInal.PetLite.repository.ProductoRepository;
+import com.ProyectoFInal.PetLite.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class ProductoService implements IProductoService{
+public class ProductoService implements IProductoService {
 
     @Autowired
-    private IProductoRepository productoRepository;
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository; // Para manejar las categorías
 
     @Override
-    public void createProducto(Producto producto) {
-        productoRepository.save(producto);
+    public ProductoDTO createProducto(ProductoDTO productoDTO) {
+        Producto producto = new Producto();
+        // Mapea los campos del DTO a la entidad
+        producto.setNombre_producto(productoDTO.getNombre_producto());
+        producto.setPrecio(productoDTO.getPrecio());
+        producto.setDisponibilidad(productoDTO.getDisponibilidad());
+        producto.setDescripcion(productoDTO.getDescripcion());
+        producto.setRangoEdad(productoDTO.getRangoEdad());
+        producto.setTamanio(productoDTO.getTamanio());
+        producto.setImagen(productoDTO.getImagen());
+
+        if (productoDTO.getId_categoria() != null) {
+            producto.setCategoriaProducto(categoriaRepository.findById(productoDTO.getId_categoria()).orElse(null));
+        }
+
+        return mapToDTO(productoRepository.save(producto));
+    }
+
+    public List<ProductoDTO> crearProductos(List<ProductoDTO> productosDTO) {
+        List<Producto> productos = new ArrayList<>();
+        for (ProductoDTO dto : productosDTO) {
+            Producto producto = new Producto();
+            producto.setNombre_producto(dto.getNombre_producto());
+            producto.setPrecio(dto.getPrecio());
+            producto.setDisponibilidad(dto.getDisponibilidad());
+            producto.setDescripcion(dto.getDescripcion());
+            producto.setRangoEdad(dto.getRangoEdad());
+            producto.setTamanio(dto.getTamanio());
+            producto.setImagen(dto.getImagen());
+
+            if (dto.getId_categoria() != null) {
+                producto.setCategoriaProducto(categoriaRepository.findById(dto.getId_categoria()).orElse(null));
+            }
+            productos.add(producto);
+        }
+        productoRepository.saveAll(productos);
+        return productosDTO;
     }
 
     @Override
-    public Producto getProductoById(Long id) {
-        Producto producto = productoRepository.findById(id).orElse(null);
-        return producto;
+    public ProductoDTO getProductoById(Long id) {
+        return productoRepository.findById(id)
+                .map(this::mapToDTO)
+                .orElse(null); // O lanzar una excepción
     }
 
     @Override
-    public List<Producto> getAllProductos() {
-        List<Producto> productos = productoRepository.findAll();
-        return productos;
+    public List<ProductoDTO> getAllProductos() {
+        return productoRepository.findAll().stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void editProducto(
-            Long id, String nombre_producto, double precio, boolean disponibilidad,
-            String descripcion, RangoEdad rangoEdad, Tamanio tamanio, Categoria categoria) {
-        Producto producto = this.getProductoById(id);
-        producto.setNombre_producto(nombre_producto);
-        producto.setPrecio(precio);
-        producto.setDisponibilidad(disponibilidad);
-        producto.setDescripcion(descripcion);
-        producto.setRangoEdad(rangoEdad);
-        producto.setTamanio(tamanio);
-        producto.setCategoriaProducto(categoria);
-        productoRepository.save(producto);
+    public ProductoDTO updateProducto(Long id, ProductoDTO productoDTO) {
+        Producto producto = productoRepository.findById(id).orElse(null); // O lanzar excepción
+        if (producto != null) {
+            // Actualiza los campos
+            producto.setNombre_producto(productoDTO.getNombre_producto());
+            producto.setPrecio(productoDTO.getPrecio());
+            producto.setDisponibilidad(productoDTO.getDisponibilidad());
+            producto.setDescripcion(productoDTO.getDescripcion());
+            producto.setRangoEdad(productoDTO.getRangoEdad());
+            producto.setTamanio(productoDTO.getTamanio());
+            producto.setImagen(productoDTO.getImagen());
+
+            if (productoDTO.getId_categoria() != null) {
+                producto.setCategoriaProducto(categoriaRepository.findById(productoDTO.getId_categoria()).orElse(null));
+            }
+
+            return mapToDTO(productoRepository.save(producto));
+        }
+        return null; // O lanzar una excepción
     }
 
     @Override
-    public void deleteProductoById(Long id) {
-        Producto producto = this.getProductoById(id);
-        productoRepository.delete(producto);
+    public void deleteProducto(Long id) {
+        productoRepository.deleteById(id);
+    }
+
+    // Método para mapear Producto a ProductoDTO
+    private ProductoDTO mapToDTO(Producto producto) {
+        ProductoDTO dto = new ProductoDTO();
+        dto.setId_producto(producto.getId_producto());
+        dto.setNombre_producto(producto.getNombre_producto());
+        dto.setPrecio(producto.getPrecio());
+        dto.setDisponibilidad(producto.isDisponibilidad());
+        dto.setDescripcion(producto.getDescripcion());
+        dto.setRangoEdad(producto.getRangoEdad());
+        dto.setTamanio(producto.getTamanio());
+        dto.setImagen(producto.getImagen());
+        if (producto.getCategoriaProducto() != null) {
+            dto.setId_categoria(producto.getCategoriaProducto().getId_categoria());
+        }
+        return dto;
     }
 }
