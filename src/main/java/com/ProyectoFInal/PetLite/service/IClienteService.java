@@ -14,6 +14,8 @@ public interface IClienteService {
 
     Cliente getClienteById(Long id);
 
+    Cliente getClienteByEmail(String email);
+
     List<Cliente> getAllClientes();
 
     List<Mascota> getAllMascotasByClienteId(Long id);
