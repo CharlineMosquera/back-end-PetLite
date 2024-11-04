@@ -1,4 +1,7 @@
 package com.ProyectoFInal.PetLite.repository;
 
-public class CategoriaRepository {
+import com.ProyectoFInal.PetLite.model.Categoria;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 }
