@@ -43,6 +43,10 @@ public class Producto {
     @JoinColumn(name = "id_orden")
     private Orden orden;
 
+    public Long getIdCategoria() {
+        return categoriaProducto != null ? categoriaProducto.getId_categoria() : null;
+    }
+
     public Producto() {
     }
 

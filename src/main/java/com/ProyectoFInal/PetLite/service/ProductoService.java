@@ -8,8 +8,7 @@ import com.ProyectoFInal.PetLite.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -124,11 +123,18 @@ public class ProductoService implements IProductoService {
         List<Producto> productos = productoRepository.findAll();
 
         // Filtrar productos que coincidan con el tamaño y rango de edad
-        return productos.stream()
-                .filter(producto -> // Filtra por los que son iguales
-                        producto.getTamanio().equals(mascotaDTO.getTamanio()) &&
-                        producto.getRangoEdad().equals(mascotaDTO.getEdad()))
-                .limit(3) // Limitar a 3 productos
-                .collect(Collectors.toList()); // Coleccionar resultados en una lista
+        List<Producto> productosFiltrados = productos.stream()
+                .filter(producto -> producto.getTamanio().contains(mascotaDTO.getTamanio()) &&
+                        producto.getRangoEdad().contains(mascotaDTO.getEdad()))
+                .toList(); // Coleccionar resultados en una lista
+
+        // Agrupar los productos por ID de categoría
+        Map<Long, List<Producto>> productosPorCategoria = productosFiltrados.stream()
+                .collect(Collectors.groupingBy(Producto::getIdCategoria));
+
+        // Seleccionar un producto aleatorio de cada categoría si está disponible
+        return productosPorCategoria.values().stream()
+                .map(listaProductos -> listaProductos.get(new Random().nextInt(listaProductos.size())))
+                .collect(Collectors.toList());
     }
 }
