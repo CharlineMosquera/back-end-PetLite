@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class ProductoDTO {
@@ -24,8 +26,8 @@ public class ProductoDTO {
     @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
 
-    private RangoEdad rangoEdad;
-    private Tamanio tamanio;
+    private List<RangoEdad> rangoEdad;
+    private List<Tamanio> tamanio;
     private String imagen;
 
     @NotNull(message = "La categoría es obligatoria")
