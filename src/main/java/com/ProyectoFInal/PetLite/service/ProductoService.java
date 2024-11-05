@@ -112,6 +112,7 @@ public class ProductoService implements IProductoService {
         dto.setRangoEdad(producto.getRangoEdad());
         dto.setTamanio(producto.getTamanio());
         dto.setImagen(producto.getImagen());
+
         if (producto.getCategoriaProducto() != null) {
             dto.setId_categoria(producto.getCategoriaProducto().getId_categoria());
         }
